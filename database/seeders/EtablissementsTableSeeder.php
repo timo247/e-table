@@ -26,6 +26,8 @@ class EtablissementsTableSeeder extends Seeder
             DB::table('etablissements')->insert(
                 [
                     'nom' => 'nom' . $i,
+                    'created_at' => $date,
+                    'updated_at' => $date
                 ]
             );
         }

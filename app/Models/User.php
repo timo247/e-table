@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Voiture;
+use App\Models\Etablissement;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -48,4 +49,10 @@ class User extends Authenticatable
     { // NOUVEAU !!!!!!!!
         return $this->hasMany(Voiture::class); // Relation (1:)N
     }
+
+     // DEFINITON DE LA RELATION x:N
+     public function etablissements()
+     { // NOUVEAU !!!!!!!!
+         return $this->belongsToMany(Etablissement::class); 
+     }
 }
