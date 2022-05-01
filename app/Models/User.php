@@ -23,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'admin',
+        'gerant'
     ];
 
     /**
@@ -55,4 +57,5 @@ class User extends Authenticatable
      { // NOUVEAU !!!!!!!!
          return $this->belongsToMany(Etablissement::class); 
      }
+
 }

@@ -21,7 +21,8 @@ class UsersTableSeeder extends Seeder {
                 'name' => 'Nom' . $i,
                 'email' => 'email' . $i . '@gmx.ch',
                 'password' => Hash::make('password' . $i),
-                'admin' => rand(0, 1)]);
+                'admin' => rand(0, 1),
+                'gerant' => rand(0,1)]);
         }
     }
 }

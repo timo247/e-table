@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VoituresController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ConsommationController;
+use App\Http\Controllers\EtablissementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,11 @@ Route::get('logout', [LoginController::class, 'logout']);
 
 Route::get('voitures/accessoire/{accessoire}', [VoituresController::class,
 'voituresAyantAccessoire']);
+
+Route::get('etablissements', [EtablissementController::class, 'showEtablissements']);
+
+Route::resource('consommations/{etablissementId}', ConsommationController::class, ['except'=>['show','edit','update']]);
+
 
 
 

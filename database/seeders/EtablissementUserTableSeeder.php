@@ -39,7 +39,9 @@ class EtablissementUserTableSeeder extends Seeder
             DB::table('etablissement_user')->insert(
                 [
                     'user_id' => 1,
-                    'etablissement_id' => $i
+                    'etablissement_id' => $i,
+                    'created_at' => $date,
+                    'updated_at' => $date
                 ]
             );
         }

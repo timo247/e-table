@@ -19,6 +19,7 @@ class VoituresController extends Controller
         $this->middleware('admin', ['only' => 'destroy']);
     }
 
+
     /**
      * Display a listing of the resource.
      *
