@@ -25,7 +25,7 @@ class EnsureUserAccessEtablissement
         $usersAccessingEtablissement = Etablissement::findOrFail($etablissementId)->users()->get();
 
         $canAccess = ($usersAccessingEtablissement->contains($user));
-        dd($canAccess);
+        //dd($canAccess);
         if ($canAccess) {
             return $next($request);
         } 

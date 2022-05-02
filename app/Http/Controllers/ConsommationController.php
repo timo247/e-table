@@ -22,10 +22,10 @@ class ConsommationController extends Controller
      */
     public function index()
     {
-        $consommation = Consommation::with('etablissement')
+        $consommations = Consommation::with('etablissement')
             ->paginate(10);
-        $links = $consommation->render();
-        // dd($voitures);
+        $links = $consommations->render();
+        //dd($consommations);
         return view('view_consommations', compact('consommations', 'links'));
     }
 

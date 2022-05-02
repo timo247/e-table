@@ -39,7 +39,8 @@ Route::get('voitures/accessoire/{accessoire}', [VoituresController::class,
 
 Route::get('etablissements', [EtablissementController::class, 'showEtablissements']);
 
-Route::resource('consommations/{etablissementId}', ConsommationController::class, ['except'=>['show','edit','update']]);
+Route::resource('consommations', ConsommationController::class, ['except'=>['index', 'show','edit','update']]);
+Route::get('consommations/{etablissementId}', [ConsommationController::class,'index']);
 
 
 
