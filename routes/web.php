@@ -30,17 +30,27 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::get('logout', [LoginController::class, 'logout']);
 
-Route::get('voitures/accessoire/{accessoire}', [VoituresController::class,
-'voituresAyantAccessoire']);
+Route::get('voitures/accessoire/{accessoire}', [VoituresController::class,'voituresAyantAccessoire']);
 
 Route::get('etablissements', [EtablissementController::class, 'showEtablissements']);
 
-Route::resource('consommations', ConsommationController::class, ['except'=>['index', 'show','edit','update']]);
-Route::get('consommations/{etablissementId}', [ConsommationController::class,'index']);
+Route::resource('consommations', ConsommationController::class, ['except'=>['index', 'show','edit','update', 'create']]);
+
+Route::get('consommations/{etablissementId}', function($etablissementId){
+$consommationController = new ConsommationController; 
+return $consommationController->index($etablissementId);   
+})->name('consommations.index');
+
+Route::get('consommations/create/{etablissementId}', function($etablissementId)
+{
+$consommationController = new ConsommationController;
+return $consommationController->create($etablissementId);
+})->name('consommations.create');
+
+
+
 
 
 

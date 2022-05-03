@@ -20,6 +20,7 @@ class EnsureUserIsGerant
     public function handle(Request $request, Closure $next)
     {
     if ($request->user()->gerant() || $request->user()->admin()) {
+        dd($request->user());
         return $next($request);
         }
         return new RedirectResponse(url('etablissements'));

@@ -4,7 +4,9 @@
 @section('header')
 @if(Auth::check())
 <div class="btn-group pull-right">
-    <a href='{{route("consommations.create")}}' class='btn btn-info'>Cr&eacute;er un consommation</a>
+<a href='{{route("consommations.create", ["etablissementId" =>
+        $consommations[0]->etablissement_id
+        ])}}' class='btn btn-info'>Cr&eacute;er un consommation</a>
     <a href='{{url("logout")}}' class='btn btn-warning'>Deconnexion</a>
 </div>
 @else
@@ -48,4 +50,7 @@
 <br>
 @endforeach
 {!! $links !!}
+
+
+<p>coucou</p>
 @endsection

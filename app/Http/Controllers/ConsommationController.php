@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConsommationRequest;
 use App\Models\Voiture;
 use App\Models\Consommation;
 use Illuminate\Http\Request;
@@ -13,17 +14,17 @@ class ConsommationController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('accesEtablissement');
-        $this->middleware('gerant', ['only' => 'destroy']);
+        $this->middleware('gerant', ['only' => 'destroy', 'create']);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($etablissementId)
     {
-        $consommations = Consommation::with('etablissement')
-            ->paginate(10);
+        $consommations = Consommation::where('etablissement_id', $etablissementId)
+        ->paginate(10);
         $links = $consommations->render();
         //dd($consommations);
         return view('view_consommations', compact('consommations', 'links'));
@@ -34,9 +35,9 @@ class ConsommationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create($etablissementId)
+    {   
+        return view('view_ajoute_consommation')->with('etablissementId', $etablissementId);
     }
 
     /**
@@ -45,7 +46,7 @@ class ConsommationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ConsommationRequest $request)
     {
         //
     }
