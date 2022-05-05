@@ -28,9 +28,9 @@ class ConsommationRequest extends FormRequest
         	'description'=>'required|alpha',
             'image_url'=>'required|min:2|max:255|alpha',
             'categorie'=>'required|alpha',
-            'prix' => ['required|numeric'],
-            'tags' => 'required|alpha',
-            'etablissement_id' => 'required|numeric'
+            'prix' => 'required|numeric',
+            'tags' => 'alpha',
+            'etablissement_id' => 'numeric'
         ];
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('consommations', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
             $table->string('nom');
             $table->text('description');
             $table->string('image_url');

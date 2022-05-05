@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Etablissement;
 use Illuminate\Support\Facades\Auth;
 
-class EnsureUserAccessEtablissement
+class EnsureUserCanSeeEtablissement
 {
     /**
      * Handle an incoming request.
@@ -19,7 +19,7 @@ class EnsureUserAccessEtablissement
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-
+        //dd($request->path());
         $splitUrl = explode("/", $request->path());
         $etablissementId = $splitUrl[1];
         $usersAccessingEtablissement = Etablissement::findOrFail($etablissementId)->users()->get();
@@ -28,6 +28,8 @@ class EnsureUserAccessEtablissement
         //dd($canAccess);
         if ($canAccess) {
             return $next($request);
-        } 
+        } else {
+            dd("userdoesnt access (etablissement)");
+        }
     }
 }

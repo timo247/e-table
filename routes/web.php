@@ -6,6 +6,7 @@ use App\Http\Controllers\VoituresController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConsommationController;
 use App\Http\Controllers\EtablissementController;
+use App\Http\Requests\ConsommationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +37,10 @@ Route::get('voitures/accessoire/{accessoire}', [VoituresController::class,'voitu
 
 Route::get('etablissements', [EtablissementController::class, 'showEtablissements']);
 
-Route::resource('consommations', ConsommationController::class, ['except'=>['index', 'show','edit','update', 'create']]);
+Route::resource('consommations', ConsommationController::class, ['except'=>['index', 'show', 'create', 'store']]);
 
 Route::get('consommations/{etablissementId}', function($etablissementId){
-$consommationController = new ConsommationController; 
+$consommationController = new ConsommationController(); 
 return $consommationController->index($etablissementId);   
 })->name('consommations.index');
 
@@ -48,6 +49,8 @@ Route::get('consommations/create/{etablissementId}', function($etablissementId)
 $consommationController = new ConsommationController;
 return $consommationController->create($etablissementId);
 })->name('consommations.create');
+
+Route::post('consommations/{etablissementId}', [ConsommationController::class, 'store']);
 
 
 

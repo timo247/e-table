@@ -4,9 +4,9 @@
 <p>hello</p>
 <div class="col-sm-offset-3 col-sm-6">
     <div class="panel panel-info">
-        <div class="panel-heading">Ajout d'un consommation</div>
+        <div class="panel-heading">Ajout d'une consommation</div>
         <div class="panel-body">
-            <form method="POST" action="{{route('consommations.store', ['etablissement_id' => {{$etablissementId}}])}}" accept-charset="UTF-8">
+            <form method="POST" action="/consommations/{{$etablissementId}}" accept-charset="UTF-8">
             @csrf
             <div class="form-group {!! $errors->has('nom') ? 'has-error' : '' !!}">
                 <input class="form-control" placeholder="Nom" name="nom" type="text">
@@ -25,15 +25,15 @@
                 {!! $errors->first('prix', '<small class="help-block">:message</small>') !!}
             </div>
             <div class="form-group {!! $errors->has('tags') ? 'has-error' : '' !!}">
-                <input class="form-control" placeholder="Tags" name="tags" cols="50" rows="10" type="number"></input>
+                <input class="form-control" placeholder="Tags" name="tags" cols="50" rows="10" type="text"></input>
                 {!! $errors->first('tags', '<small class="help-block">:message</small>') !!}
             </div>
-            <div style="display:none" class="form-group {!! $errors->has('etablissement_id') ? 'has-error' : '' !!}">
-                <input class="form-control" placeholder="Etablissement id" name="etablissement_id" type="number"></input>
+            <div class="form-group {!! $errors->has('etablissement_id') ? 'has-error' : '' !!}">
+                <input style="display:none"  class="form-control" placeholder="Etablissement id" value="{{$etablissementId}}" name="etablissement_id" type="number"></input>
                 {!! $errors->first('etablissement_id', '<small class="help-block">:message</small>') !!}
             </div>
-            <div style="display:none" class="form-group {!! $errors->has('image_url') ? 'has-error' : '' !!}">
-                <input class="form-control" placeholder="img{{$consommation->id}}.png" name="etablissement_id" type="text"></input>
+            <div  class="form-group {!! $errors->has('image_url') ? 'has-error' : '' !!}">
+                <input style="display:none" class="form-control"  placeHolder="imagepng" value="imagepng" name="image_url" type="text"></input>
                 {!! $errors->first('image_url', '<small class="help-block">:message</small>') !!}
             </div>
             <input class="btn btn-info pull-right" type="submit" value="Envoyer">

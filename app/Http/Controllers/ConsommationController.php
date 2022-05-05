@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ConsommationRequest;
 use App\Models\Voiture;
+use Illuminate\Support\Str;
 use App\Models\Consommation;
 use Illuminate\Http\Request;
+use App\Http\Requests\ConsommationRequest;
 
 class ConsommationController extends Controller
 {
@@ -13,7 +14,7 @@ class ConsommationController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('accesEtablissement');
+        $this->middleware('canSeeEtablissement', ['only' => 'index']);
         $this->middleware('gerant', ['only' => 'destroy', 'create']);
     }
     /**
@@ -48,7 +49,13 @@ class ConsommationController extends Controller
      */
     public function store(ConsommationRequest $request)
     {
-        //
+        $input = $request->input();
+        //Pas besoin du timestamp
+        //dd($input['etablissement_id']);
+        $consommation = Consommation::create($input);
+        //dd($consommation);
+        $consommation->save();
+        return view('view_confirmation_creation_consommation')->with('etablissementId', $input['etablissement_id']);
     }
 
     /**
@@ -70,8 +77,10 @@ class ConsommationController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
+        $consommation = Consommation::findOrFail($id);
+        return view('view_edit_consommation', compact('consommation'));
+
+    }    
 
     /**
      * Update the specified resource in storage.
@@ -82,7 +91,10 @@ class ConsommationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Consommation::findOrFail($id)->update($request->all());
+        $consommation = Consommation::findOrFail($id);
+        $etablissementId = $consommation -> etablissement_id;
+        return redirect('consommations/'.$etablissementId)->withOk("L'utilisateur " . $request->input('name') . " a été modifié");
     }
 
     /**
@@ -93,6 +105,8 @@ class ConsommationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $consommation = Consommation::findOrFail($id);
+        $consommation->delete();
+        return redirect()->back();
     }
 }

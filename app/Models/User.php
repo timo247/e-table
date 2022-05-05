@@ -46,10 +46,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // DEFINITON DE LA RELATION x:N
-    public function voitures()
-    { // NOUVEAU !!!!!!!!
-        return $this->hasMany(Voiture::class); // Relation (1:)N
+    public function gerant()
+    { 
+        return $this->gerant;
+    }
+
+    public function admin()
+    { 
+        return $this->admin;
     }
 
      // DEFINITON DE LA RELATION x:N
