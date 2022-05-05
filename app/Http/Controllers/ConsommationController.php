@@ -66,7 +66,8 @@ class ConsommationController extends Controller
      */
     public function show($id)
     {
-        //
+        $consommation = Consommation::findOrFail($id);
+        return view('view_show_consommation', compact('consommation'));
     }
 
     /**

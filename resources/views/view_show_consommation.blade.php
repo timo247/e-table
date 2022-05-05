@@ -5,7 +5,7 @@
 @if(Auth::check())
 <div class="btn-group pull-right">
     <a href='{{route("consommations.create", ["etablissementId" =>
-        $consommations[0]->etablissement_id
+        $consommation->etablissement_id
         ])}}' class='btn btn-info'>Cr&eacute;er un consommation</a>
     <a href='{{url("logout")}}' class='btn btn-warning'>Deconnexion</a>
 </div>
@@ -18,8 +18,6 @@
 @if(isset($info))
 <div class='row alert alert-info'> {{$info}}</div>
 @endif
-{!!$links!!}
-@foreach($consommations as $consommation)
 <article class="row bg-primary">
     <div class="col-md-12">
         <header>
@@ -34,9 +32,8 @@
             <div class="pull-right">
                 <p>{{$consommation->tags}}</a>
             </div>
-            <a href="{{route('consommations.show', [$consommation->id])}}" class="btn btn-warning btn-block">Visualiser</a>
-            @if ((Auth::check() && Auth::user()->gerant) || (Auth::check() && Auth::user()->admin))
             <a href="{{route('consommations.edit', [$consommation->id])}}" class="btn btn-warning btn-block">Modifier</a>
+            @if ((Auth::check() && Auth::user()->gerant) || (Auth::check() && Auth::user()->admin))
             <form method="POST" action="{{route('consommations.destroy', [$consommation->id])}}" accept-charset="UTF-8">
                 @csrf
                 @method('DELETE')
@@ -49,8 +46,6 @@
     </div>
 </article>
 <br>
-@endforeach
-{!! $links !!}
 
 
 <p>coucou</p>

@@ -52,6 +52,12 @@ return $consommationController->create($etablissementId);
 
 Route::post('consommations/{etablissementId}', [ConsommationController::class, 'store']);
 
+Route::get('consommation/show/{consommationId}', function($consommationId)
+{
+$consommationController = new ConsommationController;
+return $consommationController->show($consommationId);
+})->name('consommations.show');
+
 
 
 
