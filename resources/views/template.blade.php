@@ -31,3 +31,8 @@ min.css">
 </body>
 
 </html>
+
+<script>
+    let title = document.querySelector('h1.page-header');
+    console.log(title)
+</script>

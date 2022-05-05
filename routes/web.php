@@ -60,6 +60,10 @@ return $consommationController->showConsommationsByCategorie($categorie, $etabli
 });
 
 
+Route::get('fetch', function(){
+    return view('view_testFetch');
+});
+
 
 
 
