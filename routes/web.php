@@ -23,8 +23,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('voitures', VoituresController::class, ['except'=>['show','edit','update']]);
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -32,8 +30,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('logout', [LoginController::class, 'logout']);
-
-Route::get('voitures/accessoire/{accessoire}', [VoituresController::class,'voituresAyantAccessoire']);
 
 Route::get('etablissements', [EtablissementController::class, 'showEtablissements']);
 
@@ -58,6 +54,10 @@ $consommationController = new ConsommationController;
 return $consommationController->show($consommationId);
 })->name('consommations.show');
 
+Route::get('consommations/categorie/{categorie}/{etablissementId}', function($categorie, $etablissementId){
+$consommationController = new ConsommationController;
+return $consommationController->showConsommationsByCategorie($categorie, $etablissementId);    
+});
 
 
 

@@ -18,7 +18,6 @@
 @if(isset($info))
 <div class='row alert alert-info'> {{$info}}</div>
 @endif
-{!!$links!!}
 @if(isset($consommations[0]))
 @foreach($consommations as $consommation)
 <article class="row bg-primary">
@@ -52,8 +51,4 @@
 <br>
 @endforeach
 @endif
-{!! $links !!}
-
-
-<p>coucou</p>
 @endsection

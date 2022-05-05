@@ -21,7 +21,7 @@ min.css">
     <header class="jumbotron">
         <div class="container">
             <h1 class="page-header"><a href="
-{{route('voitures.index')}}">Mon blog</a></h1>
+{{route('home')}}">Mon blog</a></h1>
             @yield('header')
         </div>
     </header>

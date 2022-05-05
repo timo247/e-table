@@ -6,6 +6,7 @@ use App\Models\Voiture;
 use Illuminate\Support\Str;
 use App\Models\Consommation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ConsommationRequest;
 
 class ConsommationController extends Controller
@@ -109,5 +110,13 @@ class ConsommationController extends Controller
         $consommation = Consommation::findOrFail($id);
         $consommation->delete();
         return redirect()->back();
+    }
+
+    public function showConsommationsByCategorie($categorie, $etablissementId){
+        $consommations = DB::table('consommations')
+        ->where('categorie', 'like', $categorie)
+        ->where('etablissement_id', '=', $etablissementId)
+        ->get();
+        return view('view_consommations_categorie', compact('consommations'));
     }
 }
