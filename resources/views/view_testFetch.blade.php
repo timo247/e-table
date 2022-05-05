@@ -1,10 +1,10 @@
 @extends('template')
 @section('contenu')
 
-<ul>
+<ul class="consommationsList">
     <li class="consommation">
-        <span>nom</span>
-        <prix>prix</span>
+        <em><span class="nom">nom</span> <br/></em>
+        <span class="prix">prix</span>
     </li>
 </ul>
 
@@ -18,9 +18,26 @@
     let response = await fetch('/api/consommations', {credentials: 'include'});
     console.log(response)
     let consos =  await response.json();
-    console.log(consos);
+    console.log(consos.data)
+    return consos.data
     }
 
-    await getConsos();
+    
+    async function displayConsos(){
+        let consos = await getConsos();
+
+        consos.forEach(conso => {
+            const newConso = document.querySelector('.consommation').cloneNode(true)
+            newConso.querySelector('.nom').textContent = conso.nom
+            newConso.querySelector('.prix').textContent = conso.prix
+
+            const list = document.querySelector('.consommationsList')
+            list.append(newConso)
+        })
+    }
+
+    await displayConsos()
+
+
 
 </script>
