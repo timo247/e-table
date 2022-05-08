@@ -18,7 +18,8 @@ class UsersTableSeeder extends Seeder {
         DB::table('users')->delete();
         for ($i = 1; $i <= 10; $i++) {
             DB::table('users')->insert([
-                'name' => 'Nom' . $i,
+                'nom' => 'Nom' . $i,
+                'prenom' => 'Prenom'.$i,
                 'email' => 'email' . $i . '@gmx.ch',
                 'password' => Hash::make('password' . $i),
                 'admin' => rand(0, 1),

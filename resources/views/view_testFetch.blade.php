@@ -8,8 +8,6 @@
     </li>
 </ul>
 
-
-
 @endsection
 
 <script type="module">
@@ -21,7 +19,6 @@
     console.log(consos.data)
     return consos.data
     }
-
     
     async function displayConsos(){
         let consos = await getConsos();
@@ -37,7 +34,4 @@
     }
 
     await displayConsos()
-
-
-
 </script>

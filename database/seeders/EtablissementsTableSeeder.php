@@ -25,7 +25,7 @@ class EtablissementsTableSeeder extends Seeder
             $date = $this->randDate();
             DB::table('etablissements')->insert(
                 [
-                    'nom' => 'nom' . $i,
+                    'nom' => 'Etablissement' . $i,
                     'created_at' => $date,
                     'updated_at' => $date
                 ]

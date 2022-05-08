@@ -19,6 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Auth::routes();
+
+
 Route::get('/consommations', function(){
     $consommations = DB::table('consommations')->get();
    $response = response()->json(['success' => true,  'data' => $consommations->toArray()], 200);

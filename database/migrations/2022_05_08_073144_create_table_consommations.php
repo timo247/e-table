@@ -39,11 +39,11 @@ return new class extends Migration
      */
     public function down()
     {
-        // if (DB::getDriverName() !== 'sqlite') {
-        //     Schema::table('voitures', function (Blueprint $table) {
-        //         $table->dropForeign('articles_user_id_foreign');
-        //     });
-        // }
-        Schema::dropIfExists('consommation');
+        if (DB::getDriverName() !== 'sqlite') {
+            Schema::table('consommations', function(Blueprint $table) {
+            $table->dropForeign('consommations_user_id_foreign');
+            });
+            }
+            Schema::dropIfExists('consommations');
     }
 };
