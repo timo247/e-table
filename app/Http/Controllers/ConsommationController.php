@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Consommation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ConsommationRequest;
 
 class ConsommationController extends Controller
@@ -26,7 +27,7 @@ class ConsommationController extends Controller
     public function index($etablissementId)
     {
         $consommations = Consommation::where('etablissement_id', $etablissementId)
-        ->paginate(10);
+            ->paginate(10);
         $links = $consommations->render();
         //dd($consommations);
         return view('view_consommations', compact('consommations', 'links'));
@@ -38,7 +39,7 @@ class ConsommationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($etablissementId)
-    {   
+    {
         return view('view_ajoute_consommation')->with('etablissementId', $etablissementId);
     }
 
@@ -51,9 +52,28 @@ class ConsommationController extends Controller
     public function store(ConsommationRequest $request)
     {
         $input = $request->input();
-        //Pas besoin du timestamp
-        //dd($input['etablissement_id']);
-        $consommation = Consommation::create($input);
+        //dd($request->file('image'));
+
+        $lastIndexedConso = Consommation::orderBy('id', 'desc')->limit('1')->get();
+        $newIndex = $lastIndexedConso[0]->id + 1;
+
+        
+       $fileName = 'image-'.'etablissement-'.$input["etablissement_id"]."-consommation-".$newIndex.".png";  
+
+        $image = $request->file('image');
+        Storage::putFileAs('images', $image, $fileName);
+     
+        $consommation = new Consommation();
+
+        $consommation->nom = $input["nom"];
+        $consommation->description = $input["description"];
+        $consommation->image_url = $fileName;
+        $consommation->categorie = $input["categorie"];
+        $consommation->prix =  $input["prix"];
+        $consommation->tags = $input["tags"];
+        $consommation->etablissement_id = $input["etablissement_id"];
+
+        //dd($consommation);
         //dd($consommation);
         $consommation->save();
         return view('view_confirmation_creation_consommation')->with('etablissementId', $input['etablissement_id']);
@@ -81,8 +101,7 @@ class ConsommationController extends Controller
     {
         $consommation = Consommation::findOrFail($id);
         return view('view_edit_consommation', compact('consommation'));
-
-    }    
+    }
 
     /**
      * Update the specified resource in storage.
@@ -95,8 +114,8 @@ class ConsommationController extends Controller
     {
         Consommation::findOrFail($id)->update($request->all());
         $consommation = Consommation::findOrFail($id);
-        $etablissementId = $consommation -> etablissement_id;
-        return redirect('consommations/'.$etablissementId)->withOk("L'utilisateur " . $request->input('name') . " a été modifié");
+        $etablissementId = $consommation->etablissement_id;
+        return redirect('consommations/' . $etablissementId)->withOk("L'utilisateur " . $request->input('name') . " a été modifié");
     }
 
     /**
@@ -108,15 +127,17 @@ class ConsommationController extends Controller
     public function destroy($id)
     {
         $consommation = Consommation::findOrFail($id);
+        $etablissementId = $consommation->etablissement_id;
         $consommation->delete();
-        return redirect()->back();
+        return redirect('consommations/' . $etablissementId)->withOk("votre consommation a bien été supprimée");
     }
 
-    public function showConsommationsByCategorie($categorie, $etablissementId){
+    public function showConsommationsByCategorie($categorie, $etablissementId)
+    {
         $consommations = DB::table('consommations')
-        ->where('categorie', 'like', $categorie)
-        ->where('etablissement_id', '=', $etablissementId)
-        ->get();
+            ->where('categorie', 'like', $categorie)
+            ->where('etablissement_id', '=', $etablissementId)
+            ->get();
         return view('view_consommations_categorie', compact('consommations'));
     }
 }

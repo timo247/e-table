@@ -26,11 +26,11 @@ class ConsommationRequest extends FormRequest
         return [
             'nom'=>'required|min:2|max:30|alpha',
         	'description'=>'required|alpha',
-            'image_url'=>'required|min:2|max:255|alpha',
             'categorie'=>'required|alpha',
             'prix' => 'required|numeric',
             'tags' => 'alpha',
-            'etablissement_id' => 'numeric'
+            'etablissement_id' => 'numeric',
+            'image' => 'file|nullable',
         ];
     }
 }
